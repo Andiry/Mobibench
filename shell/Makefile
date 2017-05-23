@@ -4,8 +4,7 @@
 
 EXENAME = mobibench
 
-SRCS = mobibench.c \
-	  sqlite3.c
+SRCS = mobibench.c sqlite3.c
 
 INSTALL = install
 

@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 /* mobibench.c for mobile benchmark tool(mobibench)
  *
  * Copyright (C) 2012 ESOS lab, Hanyang University
@@ -22,7 +23,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#define __USE_GNU
+#include <sys/time.h>
 #include <fcntl.h>
 #include <time.h>
 #include <string.h> 
@@ -1727,7 +1728,7 @@ int do_script(struct script_entry* se, struct script_thread_time* st)
 	}
 	else if( strncmp(se->cmd, "stat", 4) == 0)
 	{
-		struct stat stat_buf;
+		struct stat64 stat_buf;
 		strcpy(replay_pathname, &se->args[0][1]);
 		replay_pathname[strlen(replay_pathname)-1]='\0';
 
@@ -1738,7 +1739,7 @@ int do_script(struct script_entry* se, struct script_thread_time* st)
 	}
 	else if( strncmp(se->cmd, "lstat", 5) == 0)
 	{
-		struct stat stat_buf;
+		struct stat64 stat_buf;
 		strcpy(replay_pathname, &se->args[0][1]);
 		replay_pathname[strlen(replay_pathname)-1]='\0';
 
@@ -1749,7 +1750,7 @@ int do_script(struct script_entry* se, struct script_thread_time* st)
 	}
 	else if( strncmp(se->cmd, "fstat", 5) == 0)
 	{
-		struct stat stat_buf;
+		struct stat64 stat_buf;
 		int fd_new = get_new_fd(atoi(se->args[0]));
 
 		if(fd_new > 0)
