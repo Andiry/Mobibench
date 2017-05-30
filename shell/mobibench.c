@@ -214,6 +214,7 @@ void print_time(struct timeval T1, struct timeval T2)
 	long sec,usec;
 	double time;
 	double rate;
+	double latency;
 	
 	time_t t;
 	
@@ -255,7 +256,9 @@ void print_time(struct timeval T1, struct timeval T2)
 	else
 	{
 		rate = db_transactions*num_threads/time;
-		printf("[TIME] :%8ld sec %06ldus. \t%.2f Transactions/sec\n",sec,usec, rate);
+		latency = time * 1e6 / db_transactions;
+		printf("[TIME] :%8ld sec %06ldus. Transaction latency %.2fus, "
+				"%.2f Transactions/sec\n",sec, usec, latency, rate);
 #ifdef ANDROID_APP
 		tps = (float)rate;
 #endif		
@@ -2432,7 +2435,7 @@ int main( int argc, char **argv)
 	}
 
 	printf("-----------------------------------------\n");
-	printf("[Messurement Result]\n");
+	printf("[Measurement Result]\n");
 	printf("-----------------------------------------\n");
 	cpuUsage(END_CPU_CHECK);
 	gettimeofday(&T2,NULL);
